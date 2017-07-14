@@ -14,13 +14,8 @@ module.exports = function(content) {
     if (stats.isFile()) {
       var staticTemplateRequires = "";
 
-      const regExNoDecorate = /export class (\w+)/gi;
-      const regExDecorate = /let (\w+) = class (\w+)/gi;
+      const regExNoDecorate = /class (\w+)/gi;
       var array;
-
-      while ((array = regExDecorate.exec(content)) !== null) {
-        staticTemplateRequires += array[1] + ".__template = require('./" + path.basename(htmlPath) + "');\n";
-      }
 
       while ((array = regExNoDecorate.exec(content)) !== null) {
         staticTemplateRequires += array[1] + ".__template = require('./" + path.basename(htmlPath) + "');\n";
