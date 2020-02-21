@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-module.exports = function(content) {
+module.exports = function(content, inputMap) {
   this.cacheable();
 
   // a fix for decorator
@@ -21,10 +21,12 @@ module.exports = function(content) {
         staticTemplateRequires += array[1] + ".__template = require('./" + path.basename(htmlPath) + "');\n";
       }
 
-      return content + "\n" + staticTemplateRequires;
+      this.callback(null, content + "\n" + staticTemplateRequires, inputMap);
+      return;
     }
 
   } catch(err) { }
 
-  return content;
+  this.callback(null, content, inputMap);
+  return;
 }
